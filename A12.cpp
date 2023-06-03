@@ -9,7 +9,7 @@ bool check(long long x) {
     for (int i = 1; i <= n; i++) {
         sum += x/a[i];
     }
-    if (sum >= x) return true;
+    if (sum >= k) return true;
     else return false;
 }
 int main() {
@@ -19,7 +19,8 @@ int main() {
     }
 
     long long Left = 1, Right = 1000000000;
-    while (left < right) {
+    while (Left < Right) {
+        // cout << Left << " " << Right << endl;
         long long mid = (Left + Right) / 2;
         bool ans = check(mid);
         if (ans) Right = mid;
