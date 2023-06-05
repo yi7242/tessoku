@@ -1,32 +1,26 @@
 #include <bits/stdc++.h>
+// #include <unistd.h>
 using namespace std;
  
-long long n, k;
-long long a[100009];
-
-bool check(long long x) {
-    long long sum = 0;
-    for (int i = 1; i <= n; i++) {
-        sum += x/a[i];
-    }
-    if (sum >= k) return true;
+int n;
+double x;
+bool check(double t) {
+    double a = pow(t,3) + t;
+    if (a >= n) return true;
     else return false;
 }
+
 int main() {
-    cin >> n >> k;
-    for (int i = 1; i <= n; i++) {
-        cin >> a[i];
-    }
-
-    long long Left = 1, Right = 1000000000;
-    while (Left < Right) {
-        // cout << Left << " " << Right << endl;
-        long long mid = (Left + Right) / 2;
+    cin >> n;
+    double left = 0, right = n;
+    while (abs(right-left) > 0.001) {
+        // cout << left << " " << right << endl;
+        double mid = (left + right) / 2;
         bool ans = check(mid);
-        if (ans) Right = mid;
-        else Left = mid + 1;
+        if (ans) right = mid;
+        else left = mid;        
     }
+    cout << left << endl;
 
-    cout << Left << endl;
     return 0;
 }
