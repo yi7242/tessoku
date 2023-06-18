@@ -1,4 +1,4 @@
-import numpy as np
+
 def pred(plants, query):
     for t, x, y in query:
         if t == 0:
