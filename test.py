@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from collections import defaultdict
 
 
@@ -70,3 +71,14 @@ for i in range(n):
         print(hoge[(df.find(i), df2.find(i))])
     else:
         print(str(hoge[(df.find(i), df2.find(i))]) + " ", end="")
+=======
+
+def pred(plants, query):
+    for t, x, y in query:
+        if t == 0:
+            plants = np.where(plants <= x, plants + y, plants)
+        else:
+            plants = np.where(plants >= x, plants - y, plants)
+
+    return plants
+>>>>>>> 441d9fca0ff6577d5ae38b7c9992061df4fd1b99
