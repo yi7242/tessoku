@@ -23,7 +23,6 @@ for LEN in reversed(range(0,N-1)):
             dp[l][r] = dp[l][r+1]+score2
         elif r==N:
             dp[l][r] = dp[l-1][r]+score1
-        else:
             dp[l][r] = max(dp[l-1][r]+score1,dp[l][r+1]+score2)
         
 ans = 0
