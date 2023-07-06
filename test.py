@@ -1,84 +1,56 @@
-<<<<<<< HEAD
-from collections import defaultdict
-
-
-class UnionFind():
-    def __init__(self, n):
-        self.n = n
-        self.parents = [-1] * n
-
-    def find(self, x):
-        if self.parents[x] < 0:
-            return x
-        else:
-            self.parents[x] = self.find(self.parents[x])
-            return self.parents[x]
-
-    def union(self, x, y):
-        x = self.find(x)
-        y = self.find(y)
-
-        if x == y:
-            return
-
-        if self.parents[x] > self.parents[y]:
-            x, y = y, x
-
-        self.parents[x] += self.parents[y]
-        self.parents[y] = x
-
-    def size(self, x):
-        return -self.parents[self.find(x)]
-
-    def same(self, x, y):
-        return self.find(x) == self.find(y)
-
-    def members(self, x):
-        root = self.find(x)
-        return [i for i in range(self.n) if self.find(i) == root]
-
-    def roots(self):
-        return [i for i, x in enumerate(self.parents) if x < 0]
-
-    def group_count(self):
-        return len(self.roots())
-
-    def all_group_members(self):
-        group_members = defaultdict(list)
-        for member in range(self.n):
-            group_members[self.find(member)].append(member)
-        return group_members
-
-    def __str__(self):
-        return '\n'.join(f'{r}: {m}' for r, m in self.all_group_members().items())
-
-n,k,l = map(int, input().split())
-tetsudou = [set() for i in range(n)]
-df = UnionFind(n)
-
-for i in range(k):
-    p,q = map(int, input().split())
-    df.union(p-1,q-1)
-df2 = UnionFind(n)
-for i in range(l):
-    p,q = map(int, input().split())
-    df2.union(p-1, q-1)
-hoge = defaultdict(int)
-for i in range(n):
-    hoge[(df.find(i), df2.find(i))] += 1
-for i in range(n):
-    if i == n-1:
-        print(hoge[(df.find(i), df2.find(i))])
+from collections import deque
+def my_index(l, x, default=False):
+    if x in l:
+        return l.index(x)
     else:
-        print(str(hoge[(df.find(i), df2.find(i))]) + " ", end="")
-=======
+        return default
 
-def pred(plants, query):
-    for t, x, y in query:
-        if t == 0:
-            plants = np.where(plants <= x, plants + y, plants)
-        else:
-            plants = np.where(plants >= x, plants - y, plants)
+snuke = list("snuke")
 
-    return plants
->>>>>>> 441d9fca0ff6577d5ae38b7c9992061df4fd1b99
+#探索関数：ゴールしたらそのときの位置・移動数を返す
+def Maze(start):
+    #スタート位置（x座標, y座標, 移動回数）をセット
+    pos = deque(start)
+
+    while len(pos) > 0:#探索可能ならTrue
+        x, y, index = pos.popleft() #リストから探索する位置を取得
+
+        #ゴールについた時点で終了
+        if x == h and y == w:
+            return True
+
+        #探索済みとしてセット
+        maze[x][y] = 9
+        # print(x,y, index)
+        next = (index + 1)%5
+        #現在位置の上下左右を探索：〇<2は壁でもなく探索済みでもないものを示す
+        if maze[x-1][y] == next:#左
+            pos.append([x-1, y, next])
+        if maze[x+1][y] == next:
+            pos.append([x+1, y, next])
+        if maze[x][y-1] == next:
+            pos.append([x, y-1, next])
+        if maze[x][y+1] == next:
+            pos.append([x, y+1, next])
+
+    return False
+h,w= map(int, input().split())
+maze = []
+maze.append([9]*(w+2))
+for i in range(h):
+    s = list(input())
+    x=[9]
+    for j in s:
+        x.append(my_index(snuke, j, 9))
+    x.append(9)
+    maze.append(x)
+maze.append([9]*(w+2))
+# print(maze)
+start = [[1, 1, 0]]     #スタート位置
+
+result = Maze(start)  #探索
+
+if result:
+    print("Yes")
+else:
+    print("No")
