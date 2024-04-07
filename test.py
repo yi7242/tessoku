@@ -1,45 +1,44 @@
-# 深さ優先探索（行きがけ）
-import sys
-input = sys.stdin.readline
+h, w = map(int, input().split())
+l = [[] for i in range(h)]
+s = [0, 0, 0]
+for i in range(h):
+    ll = list(input())
+    for j in ll:
+        l[i].append([j, -1])
+    if "S" in ll:
+        s[0] = i
+        s[1] = ll.index("S")
+n = int(input())
+for i in range(n):
+    r, c, e = map(int, input().split())
+    l[r - 1][c - 1][1] = e
+
+seen = [[False for i in range(w)] for j in range(h)]
 from collections import deque
 
-# グラフの作成(無向グラフでは#を消す)
-N = int(input())
-graph = [deque([]) for _ in range(N + 1)]
-for _ in range(N):
-    u, k, * v = [int(x) for x in input().split()] # uは頂点番号、kは隣接頂点の個数
-    v.sort()
-    for i in v:
-        graph[u].append(i)
-        # graph[i].append(u) # 無向グラフ
+next = deque()
+next.append(s)
+all = {".", "#", "S", "T"}
+dx = [0, 0, 1, -1]
+dy = [1, -1, 0, 0]
+# print(l)
 
-time = 0
-arrive_time = [-1] * (N + 1) # 到着時刻
 
-# 深さ優先探索
-def dfs(v):
-    global time
-    time += 1
-    stack = [v]
-    arrive_time[v] = time
-    while stack:
-        v = stack[-1]
-        if graph[v]:
-            w = graph[v].popleft()
-            if arrive_time[w] < 0:
-                time += 1
-                arrive_time[w] = time
-                stack.append(w) 
-        else:
-            stack.pop()          
-    return arrive_time
+def search(done, hito, huta, nextcount):
+    # print(done, hito, huta, nextcount)
+    if hito == h - 1 and huta == w - 1:
+        print("Yes")
+        exit()
+    for i in range(4):
+        nowhito = hito + dx[i]
+        nowhuta = huta + dy[i]
+        if 0 <= nowhito < h and 0 <= nowhuta < w:
+            if not (nowhito, nowhuta) in done:
+                if l[nowhito][nowhuta] == snuke[nextnextcount]:
+                    search(done | {(nowhito, nowhuta)}, nowhito, nowhuta, nextnextcount)
 
-# 孤立している頂点対策
-for i in range(N):
-    if arrive_time[i + 1] < 0:
-        ans = dfs(i + 1)
 
-# 頂点番号、到着時刻
-for j in range(N):
-    temp = [j + 1, ans[j + 1]]
-    print(* temp)
+search(set(), 0, 0, 0)
+
+
+print("No")
