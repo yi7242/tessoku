@@ -15,7 +15,9 @@ void solve() {
         }
         count += start - i;
     }
+    
     cout << count << endl;
+    
 }
 
 int main() {

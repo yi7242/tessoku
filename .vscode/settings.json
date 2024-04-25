@@ -1,10 +1,14 @@
 {
-    "files.associations": {
-        "ostream": "cpp",
-        "chrono": "cpp",
-        "random": "cpp",
-        "limits": "cpp",
-        "valarray": "cpp",
-        "iostream": "cpp"
-    }
+  "files.associations": {
+    "ostream": "cpp",
+    "chrono": "cpp",
+    "random": "cpp",
+    "limits": "cpp",
+    "valarray": "cpp",
+    "iostream": "cpp"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.formatting.provider": "none"
 }
